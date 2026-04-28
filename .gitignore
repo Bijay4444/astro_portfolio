@@ -8,3 +8,5 @@ dist/
 fedocs/
 resume/
 resources/
+.vercel
+.env*.local
