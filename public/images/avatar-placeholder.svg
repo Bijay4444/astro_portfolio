@@ -1,0 +1,24 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Professional avatar placeholder</title>
+  <desc id="desc">Soft UI professional avatar placeholder for Bijay Khadka.</desc>
+  <rect width="640" height="640" rx="64" fill="#E0E5EC"/>
+  <filter id="raised" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="18" dy="18" stdDeviation="14" flood-color="#A3B1C6" flood-opacity=".62"/>
+    <feDropShadow dx="-18" dy="-18" stdDeviation="14" flood-color="#FFFFFF" flood-opacity=".7"/>
+  </filter>
+  <filter id="small" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="8" dy="8" stdDeviation="7" flood-color="#A3B1C6" flood-opacity=".55"/>
+    <feDropShadow dx="-8" dy="-8" stdDeviation="7" flood-color="#FFFFFF" flood-opacity=".65"/>
+  </filter>
+  <circle cx="510" cy="130" r="58" fill="#E0E5EC" filter="url(#raised)"/>
+  <circle cx="132" cy="508" r="76" fill="#E0E5EC" filter="url(#raised)"/>
+  <circle cx="320" cy="284" r="98" fill="#E0E5EC" filter="url(#raised)"/>
+  <path d="M190 512c14-99 66-152 130-152s116 53 130 152H190Z" fill="#E0E5EC" filter="url(#raised)"/>
+  <circle cx="320" cy="284" r="56" fill="#6C63FF" opacity=".12"/>
+  <path d="M264 292c18-38 37-56 56-56s38 18 56 56" stroke="#3D4852" stroke-width="12" stroke-linecap="round"/>
+  <rect x="222" y="462" width="196" height="22" rx="11" fill="#E0E5EC" filter="url(#small)"/>
+  <rect x="250" y="504" width="140" height="18" rx="9" fill="#E0E5EC" filter="url(#small)"/>
+  <circle cx="458" cy="206" r="16" fill="#38B2AC"/>
+  <circle cx="184" cy="190" r="13" fill="#8B84FF"/>
+  <text x="320" y="590" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4">BIJAY KHADKA</text>
+</svg>

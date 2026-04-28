@@ -1,0 +1,47 @@
+---
+import Sidebar from "@/components/Sidebar.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Bijay Khadka - Backend Developer",
+  description = "Backend Developer specializing in Python, Django, APIs, PostgreSQL, and production-ready backend systems.",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://khadkabijay.com.np");
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <script is:inline>
+      document.documentElement.dataset.theme = "light";
+    </script>
+  </head>
+  <body>
+    <a href="#content" class="skip-link text-xs font-semibold">Skip to content</a>
+    <div class="min-h-screen lg:grid lg:grid-cols-[18rem_1fr]">
+      <Sidebar currentPath={Astro.url.pathname} />
+      <main id="content" class="relative min-w-0 px-4 pb-16 pt-24 sm:px-6 lg:px-10 lg:py-10">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

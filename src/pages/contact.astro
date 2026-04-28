@@ -1,0 +1,21 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { profile } from "@/data/profile";
+---
+
+<BaseLayout title="Contact | Bijay Khadka" description="Contact Bijay Khadka through email, LinkedIn, GitHub, or resume.">
+  <SectionHeading eyebrow="Contact" title="Direct Links" description="No form, no backend dependency. Use the links below to reach me directly." />
+  <div class="grid gap-4 md:grid-cols-2">
+    {profile.socials.map((social) => (
+      <a href={social.href} class="deco-card p-7" target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined}>
+        <p class="deco-kicker">{social.label}</p>
+        <p class="mt-4 break-words text-[var(--muted-text)]">{social.href.replace("mailto:", "")}</p>
+      </a>
+    ))}
+    <a href={profile.resumeHref} target="_blank" class="deco-card p-7">
+      <p class="deco-kicker">Resume</p>
+      <p class="mt-4 text-[var(--muted-text)]">Download PDF resume</p>
+    </a>
+  </div>
+</BaseLayout>

@@ -1,0 +1,136 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import SkillPills from "@/components/SkillPills.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { professionalExperience } from "@/data/experience";
+import { profile } from "@/data/profile";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const featuredProject = projects.find((project) => project.data.featured) ?? projects[0];
+const publishedPosts = (await getCollection("blog")).filter((post) => !post.data.draft);
+const terminalLines = [
+  "boot portfolio://bijay-khadka",
+  "load stack django drf postgres redis celery",
+  "compile api-contracts --mode production",
+  "status: backend node online",
+];
+const [headlinePrimary, headlineSecondary = ""] = profile.headline.split(" specializing in ");
+---
+
+<BaseLayout>
+  <section class="hero-panel px-5 py-10 sm:px-8 sm:py-14 lg:px-14">
+    <div class="reveal relative z-10 grid min-w-0 gap-10 xl:min-h-[68vh] xl:grid-cols-[minmax(0,1fr)_28rem] xl:items-center">
+      <div class="min-w-0">
+        <p class="deco-kicker mb-6">Signal origin: {profile.location}</p>
+        <h1 class="hero-title font-display max-w-3xl text-4xl font-black leading-[1.02] tracking-[0.08em] text-[var(--text)] sm:text-6xl xl:text-5xl 2xl:text-6xl" data-text={headlinePrimary}>
+          {headlinePrimary}
+          {headlineSecondary && (
+            <span class="hero-subtitle mt-3 block font-display text-2xl font-bold leading-tight tracking-[0.12em] text-[var(--accent-tertiary)] sm:text-4xl xl:text-4xl 2xl:text-5xl">
+              specializing in {headlineSecondary}
+            </span>
+          )}
+        </h1>
+        <p class="cursor-blink mt-7 max-w-[19rem] text-sm leading-7 tracking-[0.06em] text-[var(--muted-text)] sm:max-w-3xl sm:text-base sm:leading-8">
+          {profile.summary}
+        </p>
+        <div class="mt-9 grid w-full max-w-[19rem] gap-3 sm:flex sm:max-w-none sm:flex-wrap">
+          <a href="/projects" class="deco-button glitch-hover px-6 py-3 text-xs">View Projects</a>
+          <a href={profile.resumeHref} class="deco-button-outline glitch-hover px-6 py-3 text-xs" target="_blank">Download Resume</a>
+        </div>
+        <div class="mt-10 grid gap-3 sm:grid-cols-3">
+          {profile.proof.map((item, index) => (
+            <div class="deco-card min-w-0 p-5 text-xs leading-6 tracking-[0.05em] text-[var(--muted-text)]">
+              <p class="mb-4 font-mono text-xs font-semibold text-[var(--accent)]">0{index + 1}</p>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="terminal-panel min-w-0 overflow-hidden">
+        <div class="p-5 sm:p-6">
+          <p class="deco-kicker">/ops/hud</p>
+          <div class="mt-5 space-y-3 text-xs leading-6 text-[var(--muted-text)]">
+            {terminalLines.map((line) => (
+              <p><span class="text-[var(--accent)]">&gt;</span> {line}</p>
+            ))}
+          </div>
+          <div class="mt-7 grid grid-cols-2 gap-3">
+            <div class="border border-[rgb(0_255_136_/_0.32)] bg-[rgb(0_255_136_/_0.06)] p-4">
+              <p class="font-display text-2xl font-black text-[var(--accent)]">1+</p>
+              <p class="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-[var(--muted-text)]">Years</p>
+            </div>
+            <div class="border border-[rgb(0_212_255_/_0.32)] bg-[rgb(0_212_255_/_0.06)] p-4">
+              <p class="font-display text-2xl font-black text-[var(--accent-tertiary)]">API</p>
+              <p class="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-[var(--muted-text)]">Focus</p>
+            </div>
+          </div>
+          <dl class="space-y-4">
+            <div class="mt-6 flex items-start justify-between gap-5 border-t border-[var(--line)] pt-4">
+              <dt class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text)]">Core stack</dt>
+              <dd class="text-right text-xs leading-6 text-[var(--muted-text)]">Django, DRF, PostgreSQL, Redis</dd>
+            </div>
+            <div class="flex items-start justify-between gap-5 border-t border-[var(--line)] pt-4">
+              <dt class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text)]">Focus</dt>
+              <dd class="text-right text-xs leading-6 text-[var(--muted-text)]">Reliable backend delivery</dd>
+            </div>
+            <div class="flex items-start justify-between gap-5 border-t border-[var(--line)] pt-4">
+              <dt class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text)]">Current arc</dt>
+              <dd class="text-right text-xs leading-6 text-[var(--muted-text)]">Production APIs and AI systems</dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="mt-12 grid gap-8 xl:grid-cols-[1fr_0.9fr]">
+    <div>
+      <SectionHeading eyebrow="Runtime Log" title="Backend Work" description="Current professional focus: Python services, Django APIs, deployment workflows, admin systems, and production backend practices." />
+      <div class="space-y-4">
+        {professionalExperience.map((item) => (
+          <article class="deco-card p-7">
+            <p class="deco-kicker">{item.start} - {item.end}</p>
+            <h2 class="mt-3 font-display text-xl font-bold uppercase tracking-[0.08em] text-[var(--text)]">{item.role}</h2>
+            <p class="mt-2 text-xs uppercase tracking-[0.14em] text-[var(--accent-tertiary)]">{item.company} · {item.location}</p>
+            <p class="mt-4 text-sm leading-7 text-[var(--muted-text)]">{item.highlights[0]}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <SectionHeading eyebrow="Featured Payload" title="Project Trace" description="One detailed case study from the Fusemachines AI Fellowship." />
+      {featuredProject && (
+        <ProjectCard
+          href={`/projects/${featuredProject.id}`}
+          title={featuredProject.data.title}
+          description={featuredProject.data.description}
+          stack={featuredProject.data.stack}
+          featured
+        />
+      )}
+    </div>
+  </section>
+
+  <section class="mt-20 grid gap-8 xl:grid-cols-[1fr_0.8fr]">
+    <div>
+      <SectionHeading eyebrow="Toolchain" title="Backend Toolkit" />
+      <SkillPills compact />
+    </div>
+    <div class="terminal-panel overflow-hidden">
+      <div class="p-7">
+        <p class="deco-kicker mb-4">Blog Buffer</p>
+        <h2 class="font-display deco-section-title text-2xl font-bold text-[var(--text)]">Backend notes are in progress.</h2>
+        <p class="mt-3 text-sm leading-7 text-[var(--muted-text)]">
+          {publishedPosts.length > 0
+            ? "Read practical posts on Django, APIs, and deployment."
+            : "Drafts exist locally, but nothing is published until the posts are edited and marked ready."}
+        </p>
+        <a href="/blog" class="mt-6 inline-flex text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent)]">Open Blog</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

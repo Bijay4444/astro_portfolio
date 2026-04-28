@@ -1,0 +1,40 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { professionalExperience, researchExperience } from "@/data/experience";
+---
+
+<BaseLayout title="Experience | Bijay Khadka" description="Professional backend development and research experience for Bijay Khadka.">
+  <SectionHeading eyebrow="Timeline" title="Experience" description="Professional backend work first, followed by research and development projects that support my backend and AI pipeline direction." />
+
+  <section class="space-y-5">
+    {professionalExperience.map((item) => (
+      <article class="deco-card p-7">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="font-display deco-section-title text-2xl text-[var(--text)]">{item.role}</h2>
+            <p class="mt-1 text-[var(--muted-text)]">{item.company} · {item.location}</p>
+          </div>
+          <p class="deco-kicker">{item.start} - {item.end}</p>
+        </div>
+        <ul class="mt-5 space-y-3 text-sm leading-7 text-[var(--muted-text)]">
+          {item.highlights.map((highlight) => <li>{highlight}</li>)}
+        </ul>
+      </article>
+    ))}
+  </section>
+
+  <section class="mt-16">
+    <SectionHeading eyebrow="R&D" title="Research and Development" />
+    <div class="grid gap-4 lg:grid-cols-3">
+      {researchExperience.map((item) => (
+        <article class="deco-card p-6">
+          <p class="deco-kicker">{item.date}</p>
+          <h2 class="mt-3 font-display text-xl font-semibold text-[var(--text)]">{item.title}</h2>
+          <p class="deco-kicker mt-1">{item.context}</p>
+          <p class="mt-4 text-sm leading-7 text-[var(--muted-text)]">{item.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

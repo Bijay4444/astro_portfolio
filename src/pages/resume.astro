@@ -1,0 +1,45 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import SkillPills from "@/components/SkillPills.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { certifications, education } from "@/data/credentials";
+import { professionalExperience } from "@/data/experience";
+import { profile } from "@/data/profile";
+---
+
+<BaseLayout title="Resume | Bijay Khadka" description="Recruiter-friendly resume summary for Bijay Khadka, backend developer specializing in Python.">
+  <SectionHeading eyebrow="Resume" title="Recruiter Summary" description={profile.summary} />
+  <a href={profile.resumeHref} target="_blank" class="deco-button mb-10 inline-block px-6 py-3 text-xs font-semibold">Download PDF Resume</a>
+
+  <section class="grid gap-8 xl:grid-cols-[0.9fr_1fr]">
+    <div>
+      <SectionHeading eyebrow="Core" title="Key Skills" />
+      <SkillPills compact />
+    </div>
+    <div>
+      <SectionHeading eyebrow="Work" title="Experience Highlights" />
+      <div class="space-y-4">
+        {professionalExperience.map((item) => (
+          <article class="deco-card p-6">
+            <h2 class="font-display text-lg font-semibold text-[var(--text)]">{item.role}</h2>
+            <p class="deco-kicker mt-1">{item.company} · {item.start} - {item.end}</p>
+            <p class="mt-3 text-sm leading-7 text-[var(--muted-text)]">{item.highlights[0]}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-16 grid gap-8 xl:grid-cols-2">
+    <div>
+      <SectionHeading eyebrow="Education" title="Education" />
+      {education.map((item) => <p class="deco-card p-6 text-[var(--muted-text)]">{item.title}, {item.institution} · {item.period}</p>)}
+    </div>
+    <div>
+      <SectionHeading eyebrow="Training" title="Certifications" />
+      <div class="space-y-3">
+        {certifications.map((item) => <p class="deco-card p-6 text-[var(--muted-text)]">{item.title}, {item.issuer} · {item.period}</p>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

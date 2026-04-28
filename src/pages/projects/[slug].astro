@@ -1,0 +1,30 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.seoTitle ?? project.data.title} | Bijay Khadka`} description={project.data.seoDescription ?? project.data.description}>
+  <article class="max-w-4xl">
+    <SectionHeading eyebrow={project.data.role} title={project.data.title} description={project.data.description} />
+    <div class="mb-8 flex flex-wrap gap-2">
+      {project.data.stack.map((item) => (
+        <span class="deco-chip px-4 py-2 text-xs">{item}</span>
+      ))}
+    </div>
+    <div class="prose-custom deco-card p-8">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

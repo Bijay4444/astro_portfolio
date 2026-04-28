@@ -1,0 +1,65 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import SkillPills from "@/components/SkillPills.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { certifications, education } from "@/data/credentials";
+import { profile } from "@/data/profile";
+---
+
+<BaseLayout title="About | Bijay Khadka" description="About Bijay Khadka, a backend developer specializing in Python, Django, APIs, and backend systems.">
+  <SectionHeading eyebrow="About" title="Backend engineer with a systems mindset" description={profile.summary} />
+
+  <section class="grid gap-8 xl:grid-cols-[1fr_0.85fr]">
+    <div class="deco-card p-7 text-[var(--muted-text)]">
+      <p class="leading-8">
+        I am a backend developer focused on Python, Django, REST API design, database-backed systems, background jobs, and deployment workflows. My current direction is building reliable service layers that are easy to operate and maintain.
+      </p>
+      <p class="mt-4 leading-8">
+        I also have academic and fellowship experience around AI pipelines, including computer vision, LLM-based commentary generation, and healthcare reminder systems.
+      </p>
+    </div>
+
+    <div class="deco-card p-7">
+      <h2 class="font-display deco-section-title text-2xl text-[var(--text)]">Public Presence</h2>
+      <div class="mt-5 space-y-3">
+        {profile.socials.map((social) => (
+          <a href={social.href} class="soft-raised-sm flex min-h-12 items-center justify-between rounded-2xl px-4 py-2 text-[var(--muted-text)] transition hover:text-[var(--accent)]" target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined}>
+            <span>{social.label}</span>
+            <span class="deco-kicker">Open</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-16">
+    <SectionHeading eyebrow="Capabilities" title="Skills" />
+    <SkillPills />
+  </section>
+
+  <section class="mt-16 grid gap-8 xl:grid-cols-2">
+    <div>
+      <SectionHeading eyebrow="Education" title="Academic Background" />
+      {education.map((item) => (
+        <article class="deco-card p-7">
+          <h2 class="font-display text-xl font-semibold text-[var(--text)]">{item.title}</h2>
+          <p class="mt-2 text-[var(--muted-text)]">{item.institution} · {item.location}</p>
+          <p class="deco-kicker mt-2">{item.period} · {item.detail}</p>
+        </article>
+      ))}
+    </div>
+
+    <div>
+      <SectionHeading eyebrow="Certifications" title="Training" />
+      <div class="space-y-4">
+        {certifications.map((item) => (
+          <article class="deco-card p-6">
+            <h2 class="font-display text-lg font-semibold text-[var(--text)]">{item.title}</h2>
+            <p class="deco-kicker mt-1">{item.issuer} · {item.period}</p>
+            <p class="mt-3 text-sm leading-7 text-[var(--muted-text)]">{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

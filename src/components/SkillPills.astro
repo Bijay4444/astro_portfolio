@@ -1,0 +1,44 @@
+---
+import { skillGroups } from "@/data/skills";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const groups = compact ? skillGroups.filter((group) => group.priority === "primary") : skillGroups;
+
+const groupIcons: Record<string, string> = {
+  Backend: "M5 6h14v12H5z M8 9h3 M8 12h8 M8 15h5",
+  "Databases & Queues": "M6 7c0-2 12-2 12 0v10c0 2-12 2-12 0z M6 7c0 2 12 2 12 0 M6 12c0 2 12 2 12 0",
+  Infrastructure: "M12 4l7 4v8l-7 4-7-4V8z M12 4v8l7 4 M12 12l-7 4",
+  "Frontend & Basics": "M4 6h16v12H4z M7 9l3 3-3 3 M13 15h4",
+};
+
+const itemIconPath = "M5 12h14 M12 5l7 7-7 7";
+---
+
+<div class="space-y-7">
+  {groups.map((group) => (
+    <section>
+      <h2 class="mb-4 flex items-center gap-3 font-display text-xl font-semibold text-[var(--text)]">
+        <span class="skill-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d={groupIcons[group.title] ?? groupIcons.Backend} />
+          </svg>
+        </span>
+        <span>{group.title}</span>
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        {group.items.map((item) => (
+          <span class="deco-chip inline-flex items-center gap-2 px-4 py-2 text-xs">
+            <svg class="h-3 w-3 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d={itemIconPath} stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" />
+            </svg>
+            {item}
+          </span>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>

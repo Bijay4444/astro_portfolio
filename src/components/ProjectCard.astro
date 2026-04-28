@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  stack: string[];
+  featured?: boolean;
+}
+
+const { href, title, description, stack, featured = false } = Astro.props;
+---
+
+<a href={href} class="deco-card group block p-7">
+  {featured && <p class="deco-kicker mb-4">Featured Project</p>}
+  <h2 class="font-display deco-section-title text-2xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]">{title}</h2>
+  <p class="mt-3 text-sm leading-7 text-[var(--muted-text)]">{description}</p>
+  <div class="mt-5 flex flex-wrap gap-2">
+    {stack.slice(0, 6).map((item) => (
+      <span class="deco-chip px-3 py-1.5 text-xs">{item}</span>
+    ))}
+  </div>
+</a>

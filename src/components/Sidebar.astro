@@ -1,0 +1,110 @@
+---
+import { libraryNavItems, navItems, profile } from "@/data/profile";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath === href || currentPath.startsWith(`${href}/`);
+
+const secondaryLibraryItems = libraryNavItems.filter((item) => item.href !== "/library");
+---
+
+<header class="fixed left-0 top-0 z-50 w-screen max-w-[100vw] border-b border-[var(--line)] bg-[var(--bg)]/95 px-4 py-3 backdrop-blur lg:hidden">
+  <div class="flex min-h-8 items-center gap-4">
+    <a href="/" class="font-display text-sm font-black uppercase tracking-[0.1em] text-[var(--text)] sm:text-base sm:tracking-[0.18em]">Bijay Khadka</a>
+    <button id="menu-toggle" class="deco-button-outline inline-flex shrink-0 items-center px-3 py-2 text-xs font-semibold sm:px-4" aria-expanded="false" aria-controls="mobile-nav">
+      Menu
+    </button>
+  </div>
+</header>
+
+<aside id="mobile-nav" class="deco-shell fixed left-0 top-14 z-40 h-[calc(100dvh-3.5rem)] w-[18rem] max-w-[86vw] -translate-x-full overflow-y-auto px-6 py-6 transition-transform duration-300 lg:sticky lg:top-0 lg:z-auto lg:block lg:h-screen lg:w-auto lg:max-w-none lg:translate-x-0 lg:overflow-visible lg:py-8">
+  <div class="relative z-10 flex h-full flex-col">
+    <a href="/" class="group hidden border-b border-[var(--line)] pb-7 lg:block">
+      <p class="font-display text-2xl font-black uppercase leading-tight tracking-[0.14em] text-[var(--text)]">Bijay Khadka</p>
+      <p class="cursor-blink mt-3 text-xs uppercase tracking-[0.18em] text-[var(--accent-tertiary)]">Django / API / Systems</p>
+    </a>
+
+    <nav class="mt-0 space-y-6 lg:mt-8 lg:space-y-8" aria-label="Primary navigation">
+      <div class="space-y-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "glitch-hover group flex min-h-11 items-center gap-3 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition duration-150",
+              isActive(item.href)
+                ? "border-l-2 border-[var(--accent)] bg-[rgb(0_255_136_/_0.08)] text-[var(--accent)] shadow-[0_0_18px_rgb(0_255_136_/_0.14)]"
+                : "border-l-2 border-transparent text-[var(--muted-text)] hover:border-[var(--accent-tertiary)] hover:bg-[rgb(0_212_255_/_0.07)] hover:text-[var(--accent-tertiary)]",
+            ]}
+          >
+            <span class="font-mono text-xs text-[var(--accent-secondary)]">{item.numeral}</span>
+            <span>{item.label}</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="pt-2 lg:pt-4">
+        <p class="deco-kicker mb-4">Library</p>
+        <div class="space-y-1">
+          {secondaryLibraryItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                "glitch-hover group flex min-h-11 items-center gap-3 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition duration-150",
+                isActive(item.href)
+                  ? "border-l-2 border-[var(--accent)] bg-[rgb(0_255_136_/_0.08)] text-[var(--accent)] shadow-[0_0_18px_rgb(0_255_136_/_0.14)]"
+                  : "border-l-2 border-transparent text-[var(--muted-text)] hover:border-[var(--accent-tertiary)] hover:bg-[rgb(0_212_255_/_0.07)] hover:text-[var(--accent-tertiary)]",
+              ]}
+            >
+              <span class="font-mono text-xs text-[var(--accent-secondary)]">{item.numeral}</span>
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <div class="mt-auto space-y-5 border-t border-[var(--line)] pt-6">
+      <div>
+        <p class="deco-kicker mb-4">Connect</p>
+        <div class="space-y-1">
+          {profile.socials.map((social) => (
+            <a href={social.href} class="glitch-hover flex min-h-10 items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--muted-text)] transition hover:bg-[rgb(255_0_255_/_0.08)] hover:text-[var(--accent-secondary)]" target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined}>
+              <span>{social.label}</span>
+              <span aria-hidden="true" class="text-[var(--accent-secondary)]">/</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div id="menu-overlay" class="fixed inset-0 z-20 hidden bg-black/60 lg:hidden" aria-hidden="true"></div>
+
+<script>
+  const menuToggle = document.querySelector<HTMLButtonElement>("#menu-toggle");
+  const mobileNav = document.querySelector<HTMLElement>("#mobile-nav");
+  const overlay = document.querySelector<HTMLElement>("#menu-overlay");
+
+  function setMenu(open: boolean) {
+    mobileNav?.classList.toggle("-translate-x-full", !open);
+    overlay?.classList.toggle("hidden", !open);
+    menuToggle?.setAttribute("aria-expanded", String(open));
+  }
+
+  menuToggle?.addEventListener("click", () => {
+    const open = menuToggle.getAttribute("aria-expanded") !== "true";
+    setMenu(open);
+  });
+
+  overlay?.addEventListener("click", () => setMenu(false));
+
+  document.querySelectorAll("#mobile-nav a").forEach((link) => {
+    link.addEventListener("click", () => setMenu(false));
+  });
+</script>
